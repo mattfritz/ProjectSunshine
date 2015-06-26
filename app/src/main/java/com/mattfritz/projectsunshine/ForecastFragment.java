@@ -32,6 +32,8 @@ import java.util.List;
 
 public class ForecastFragment extends Fragment {
 
+    public ArrayAdapter<String> mForecastAdapter;
+
     public ForecastFragment() {
     }
 
@@ -58,14 +60,14 @@ public class ForecastFragment extends Fragment {
 
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecast));
 
-        ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(
+        mForecastAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
                 weekForecast);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(forecastAdapter);
+        listView.setAdapter(mForecastAdapter);
 
         return rootView;
     }
@@ -119,7 +121,6 @@ public class ForecastFragment extends Fragment {
                     .appendQueryParameter("cnt", "7");
 
                 String urlString = builder.build().toString();
-                Log.v(LOG_TAG, "WEATHER URL: " + urlString);
                 URL url = new URL(urlString);
 
                 // Create the request to OpenWeatherMap, and open the connection
@@ -166,8 +167,6 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-
-            Log.v(LOG_TAG, "Forecast JSON string: " + forecastJsonStr);
 
             try {
                 return getWeatherDataFromJson(forecastJsonStr, numDays);
@@ -270,11 +269,18 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
-            for (String s : resultStrs) {
-                Log.v(LOG_TAG, "Forecast entry: " + s);
-            }
             return resultStrs;
 
+        }
+
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+                for (String dayForecastStr : result) {
+                    mForecastAdapter.add(dayForecastStr);
+                }
+            }
         }
     }
 }

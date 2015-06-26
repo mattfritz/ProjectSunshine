@@ -73,13 +73,14 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
+            new FetchWeatherTask().execute();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public abstract class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
+    public class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
@@ -141,6 +142,9 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
+
+            Log.v(LOG_TAG, "Forecast JSON string: " + forecastJsonStr);
+
             return null;
         }
     }

@@ -202,12 +202,32 @@ public class ForecastFragment extends Fragment {
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
+
+            String units = PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    .getString(getString(R.string.pref_units_key),
+                            getString(R.string.pref_units_default));
+
+            if (units.equals("imperial")) {
+                high = toFahrenheit(high);
+                low = toFahrenheit(low);
+            }
+
             // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;
+        }
+
+        /**
+         * Convert temperatures into fahrenheit from celcius
+         *
+         * @param double temp
+         * @return double
+         */
+        private double toFahrenheit(double temp) {
+            return temp * 1.8 + 32;
         }
 
         /**

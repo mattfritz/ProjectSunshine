@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Project Sunshine</string>
     <string name="action_settings">Settings</string>
+    <string name="action_maps">View My Location</string>
     <string name="action_refresh" translatable="false">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="hello_world">Hello world!</string>

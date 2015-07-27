@@ -35,6 +35,10 @@
                 android:value=".MainActivity" >
             </meta-data>
         </activity>
+        <provider
+            android:authorities="com.mattfritz.projectsunshine"
+            android:name=".data.WeatherProvider">
+        </provider>
     </application>
 
 </manifest>

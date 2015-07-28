@@ -68,6 +68,35 @@ public class WeatherProvider extends ContentProvider {
                     "." + WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ? AND " +
                     WeatherContract.WeatherEntry.COLUMN_DATE + " = ? ";
 
+    private Cursor getWeather(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+
+        SQLiteQueryBuilder db = new SQLiteQueryBuilder();
+        db.setTables(WeatherContract.WeatherEntry.TABLE_NAME);
+        return db.query(mOpenHelper.getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+    }
+     private Cursor getLocation(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+
+         SQLiteQueryBuilder db = new SQLiteQueryBuilder();
+         db.setTables(WeatherContract.LocationEntry.TABLE_NAME);
+         return db.query(mOpenHelper.getReadableDatabase(),
+                 projection,
+                 selection,
+                 selectionArgs,
+                 null,
+                 null,
+                 sortOrder
+         );
+     }
+
     private Cursor getWeatherByLocationSetting(Uri uri, String[] projection, String sortOrder) {
         String locationSetting = WeatherContract.WeatherEntry.getLocationSettingFromUri(uri);
         long startDate = WeatherContract.WeatherEntry.getStartDateFromUri(uri);
@@ -188,12 +217,12 @@ public class WeatherProvider extends ContentProvider {
             }
             // "weather"
             case WEATHER: {
-                retCursor = null;
+                retCursor = getWeather(uri, projection, selection, selectionArgs, sortOrder);
                 break;
             }
             // "location"
             case LOCATION: {
-                retCursor = null;
+                retCursor = getLocation(uri, projection, selection, selectionArgs, sortOrder);
                 break;
             }
 

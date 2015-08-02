@@ -37,7 +37,10 @@
         </activity>
         <provider
             android:authorities="com.mattfritz.projectsunshine"
-            android:name=".data.WeatherProvider">
+            android:name=".data.WeatherProvider"
+            android:enabled="true"
+            android:exported="true"
+        >
         </provider>
     </application>
 

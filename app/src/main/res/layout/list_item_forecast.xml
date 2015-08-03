@@ -26,15 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/list_item_date_textview"
-            android:text="DATE INFO" />
+            android:id="@+id/list_item_date_textview" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/list_item_forecast_textview"
-            android:text="FORECAST" />
+            android:id="@+id/list_item_forecast_textview" />
 
     </LinearLayout>
 
@@ -51,15 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/list_item_high_textview"
-            android:text="HI TEMP" />
+            android:id="@+id/list_item_high_textview" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:id="@+id/list_item_low_textview"
-            android:text="LO TEMP" />
+            android:id="@+id/list_item_low_textview" />
 
     </LinearLayout>
 

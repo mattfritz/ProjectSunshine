@@ -17,14 +17,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mLocation = Utility.getPreferredLocation(this);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment, new ForecastFragment(), FORECASTFRAGMENT_TAG)
                     .commit();
         }
-        setContentView(R.layout.activity_main);
     }
 
 
@@ -56,14 +56,16 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onResume() {
+        super.onResume();
         String settingsLocation = Utility.getPreferredLocation(this);
-        if (!settingsLocation.equals(mLocation)) {
+        if (settingsLocation != null && !settingsLocation.equals(mLocation)) {
             ForecastFragment ff = (ForecastFragment) getSupportFragmentManager()
                     .findFragmentByTag(FORECASTFRAGMENT_TAG);
-            ff.onLocationChanged();
+            if ( ff != null) {
+                ff.onLocationChanged();
+            }
             mLocation = settingsLocation;
         }
-        super.onResume();
     }
 
     private void openPreferredLocationInMap() {

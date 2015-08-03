@@ -15,6 +15,7 @@
  */
 package com.mattfritz.projectsunshine;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,7 +23,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.format.Time;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.mattfritz.projectsunshine.data.WeatherContract;
 import com.mattfritz.projectsunshine.data.WeatherContract.WeatherEntry;
@@ -43,7 +43,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
     private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
-    private ArrayAdapter<String> mForecastAdapter;
     private final Context mContext;
 
     public FetchWeatherTask(Context context) {
@@ -73,7 +72,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             new String[]{locationSetting},
             null);
 
-        if (locationCursor.moveToNext()) {
+        if (locationCursor.moveToFirst()) {
             int index = locationCursor.getColumnIndex(WeatherContract.LocationEntry._ID);
             _id = locationCursor.getLong(index);
         } else {
@@ -83,12 +82,13 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             values.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, lat);
             values.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, lon);
 
-            Uri result = mContext.getContentResolver().insert(
+            Uri insertedUri = mContext.getContentResolver().insert(
                     WeatherContract.LocationEntry.CONTENT_URI,
                     values
             );
-            _id = Long.parseLong(result.getLastPathSegment());
+            _id = ContentUris.parseId(insertedUri);
         }
+        locationCursor.close();
         return _id;
     }
 

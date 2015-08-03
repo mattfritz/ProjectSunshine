@@ -23,9 +23,9 @@ import com.mattfritz.projectsunshine.data.WeatherContract;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String LOG_TAG = DetailActivityFragment.class.getSimpleName();
+    private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
     private static final int DETAIL_LOADER = 0;
 
@@ -46,7 +46,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     private String mForecastStr;
     private ShareActionProvider mShareActionProvider;
 
-    public DetailActivityFragment() {
+    public DetailFragment() {
         setHasOptionsMenu(true);
     }
 

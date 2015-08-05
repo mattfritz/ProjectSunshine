@@ -59,7 +59,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_WEATHER_DEGREES = 8;
     public static final int COL_WEATHER_CONDITION_ID = 9;
 
-    private String mForecastStr;
+    private String mForecast;
     private Uri mUri;
     private ShareActionProvider mShareActionProvider;
 
@@ -84,6 +84,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Bundle arguments = getArguments();
         if (arguments != null) {
             mUri = arguments.getParcelable(DetailFragment.DETAIL_URI);
+        } else {
+            Intent intent = getActivity().getIntent();
+            mUri = intent.getData();
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
@@ -108,7 +111,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mShareActionProvider =
                 (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
 
-        if (mForecastStr != null ) {
+        if (mForecast != null ) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
         } else {
             Log.d(LOG_TAG, "Share Action Provider is null?");
@@ -167,7 +170,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         float pressure = data.getFloat(COL_WEATHER_PRESSURE);
         mPressureView.setText(getActivity().getString(R.string.format_pressure, pressure));
 
-        mForecastStr = String.format("%s - %s - %s/%s", dateText, description, high, low);
+        mForecast = String.format("%s - %s - %s/%s", dateText, description, high, low);
 
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
@@ -187,8 +190,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT,
-                mForecastStr + FORECAST_SHARE_HASHTAG);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mForecast + FORECAST_SHARE_HASHTAG);
         return shareIntent;
     }
 

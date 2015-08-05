@@ -5,7 +5,8 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:id="@+id/list_item_forecast" >
+    android:id="@+id/list_item_forecast"
+    android:background="@drawable/touch_selector" >
 
     <ImageView
         android:layout_width="wrap_content"
